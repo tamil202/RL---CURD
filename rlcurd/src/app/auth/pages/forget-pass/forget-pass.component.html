@@ -1,0 +1,54 @@
+<div class="bg-gray-800">
+    <div class="flex justify-center min-h-screen items-center sm:px-20 md:px-40 lg:px-80 ">
+        <div class="bg-white rounded w-full ">
+            <div class="w-full h-full py-10">
+                <form autocomplete="off" [formGroup]="formData" >
+                    <div class="flex flex-col gap-y-5 mx-20 my-5">
+                    <div class="flex items-center">
+                        <i class="fa fa-arrow-left text-2xl cursor-pointer mr-10 md:mr-0" aria-hidden="true" (click)="back()"></i>
+                        <div class="flex justify-center w-full">
+                        <h1 class="mb-5  uppercase text-3xl font-bold text-center">Forget Password</h1>
+                        </div>
+                    </div>
+                        <p class="text-center">TO enter email to send OTP</p>
+                        <div class="relative flex">
+                            <input formControlName='email'
+                                [class.invalid]="formData.get('email')?.invalid && (formData.get('email')?.dirty || formData.get('email')?.touched || isSubmitted)"
+                                type="email" class="outline-none border border-gray-300  w-full px-4 py-3 rounded" placeholder="Your Email"
+                                name="useremail" id="useremail">
+                            <i class="fa fa-envelope z-50 absolute top-5 right-5" aria-hidden="true"></i>
+                               
+                        </div>
+                        <span
+                            *ngIf="formData.get('email')?.invalid && (formData.get('email')?.dirty || formData.get('email')?.touched || isSubmitted)"
+                            class="text-red-600" for="useremail">Enter valid email</span>
+                        
+                       
+                    </div>
+                </form>
+                <ng-container class="" *ngIf="isOTP">
+                    <div class="relative animate-fade-down px-20">
+                        <input type="text" [(ngModel)]="otpvalue" class="outline-none border border-gray-300  w-full px-4 py-3 rounded"
+                            placeholder="Enter OTP" name="useremail" id="useremail">
+                        <i class="fa fa-sort-numeric-asc absolute right-[100px] top-5" aria-hidden="true"></i>
+                    </div>
+                </ng-container>
+                            <div *ngIf="isLoading" class="flex items-center  justify-center mt-10 opacity-60">
+                                <div class=" spinner "></div>
+                            </div>
+                <div class=" flex justify-center px-20 mt-10 ">
+                    <button *ngIf="btn" type="submit"
+                    (click)="sendOTP()"
+                    [disabled]="(this.formData.get('email')?.invalid) || (this.formData.get('password')?.invalid)"
+                        class=" text-white uppercase border-none bg-gradient-to-r from-violet-500 to-fuchsia-500 w-full rounded py-2 ">SEND OTP</button>
+                    <button *ngIf="btn1" type="submit" 
+                        [disabled]="!otpvalue"
+                        (click)="verifiyotnbtnClick()"
+                        class=" text-white uppercase border-none bg-gradient-to-r from-violet-500 to-fuchsia-500 w-full rounded py-2 ">VERIFIY OTP
+                        </button>
+                    </div>
+            </div>
+           
+        </div>
+    </div>
+</div>

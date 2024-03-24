@@ -1,0 +1,49 @@
+<div class="bg-gray-800">
+    <div class="flex justify-center min-h-screen items-center sm:px-20 md:px-40 lg:px-80 ">
+        <div class="bg-white rounded w-full ">
+            <div class="w-full h-full py-10">
+                <form autocomplete="off" [formGroup]="formData" >
+                    <div class="flex flex-col gap-y-5 m-20">
+                        <h1 class="uppercase text-3xl font-bold mb-10 text-center">{{innerBody.heading}}</h1>
+                        <div class="relative w-full">
+                            <input formControlName="username" [class.invalid]="formData.get('username')?.invalid && (formData.get('username')?.dirty || formData.get('username')?.touched || isSubmitted)" type="text" class="outline-none border border-gray-300 w-[100%] px-4 py-3 rounded" placeholder="Your Name"
+                                name="username" id="username">
+                            <span *ngIf="formData.get('username')?.invalid && (formData.get('username')?.dirty || formData.get('username')?.touched || isSubmitted)" class="text-red-600" for="useremail">{{innerBody.spanErrorUser}}</span>     <i class="fa fa-user absolute right-5 top-5"  aria-hidden="true"></i>
+                        </div>
+                        <div class="relative">
+                            <input  formControlName='email'  [class.invalid]="formData.get('email')?.invalid && (formData.get('email')?.dirty || formData.get('email')?.touched || isSubmitted)" type="email" class="outline-none border border-gray-300  w-full px-4 py-3 rounded" placeholder="Your Email"
+                                name="useremail" id="useremail">
+                                <i class="fa fa-envelope absolute right-5 top-5" aria-hidden="true"></i>
+                            <span *ngIf="formData.get('email')?.invalid && (formData.get('email')?.dirty || formData.get('email')?.touched || isSubmitted)" class="text-red-600" for="useremail">{{innerBody.spanErrorEmail}}</span>
+                            </div>
+                        <div class="relative">
+                            <input formControlName="password" [class.invalid]="formData.get('password')?.invalid && (formData.get('password')?.dirty || formData.get('password')?.touched || isSubmitted)" type="password" class="outline-none border border-gray-300  w-full px-4 py-3 rounded" placeholder="Password"
+                                name="password" id="password">
+                            <i *ngIf="isPasswordOpen" class="fa fa-eye absolute right-5 top-5 cursor-pointer"   aria-hidden="true" (click)="isPasswordManage()"></i>
+                            <i *ngIf="isPasswordClose" class="fa fa-eye-slash absolute right-5 top-5 cursor-pointer"  aria-hidden="true" (click)="isPasswordManage()"></i>
+                            <span
+                                *ngIf="formData.get('password')?.invalid && (formData.get('password')?.dirty || formData.get('password')?.touched || isSubmitted)"
+                                class="text-red-600" for="password">{{innerBody.spanErrorPassword}}</span> 
+                        </div>
+                        <div class="relative">
+                            <label for="repeatPass"></label>
+                            <input formControlName="Repeatpassword" type="password" [class.invalid]="formData.get('Repeatpassword')?.invalid && (formData.get('Repeatpassword')?.dirty || formData.get('Repeatpassword')?.touched || isSubmitted)" class="outline-none border border-gray-300  w-full px-4 py-3 rounded"
+                                placeholder="Repaeat your Password" name="repeatPass" id="repeatPass">
+                            <i class="fa fa-repeat absolute right-5 top-5"  aria-hidden="true"></i>
+                            <span *ngIf="isPasswordMisMatch" class="text-red-600" for="useremail">Password did not Match</span> 
+                        </div>
+                    </div>
+                </form>
+                <div class="flex justify-center px-20 mt-20 ">
+                    <button type="submit" [disabled]="(this.formData.get('username')?.invalid) ||( this.formData.get('email')?.invalid) || (this.formData.get('password')?.invalid) || (this.formData.get('Repeatpassword')?.invalid) || isPasswordMisMatch"
+                        (click)="formSubmit()"
+                        class="text-white uppercase border-none bg-gradient-to-r from-violet-500 to-fuchsia-500 w-full rounded py-2 ">Sign
+                        up</button>
+                </div>
+            </div>
+            <div class="my-10 text-center">
+                 <span>Have already an account ? <a (click)="isClickA()"  class="font-bold underline  cursor-pointer">Login here</a></span>
+            </div>
+        </div>
+    </div>
+</div>

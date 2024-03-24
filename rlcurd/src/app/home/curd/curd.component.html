@@ -1,0 +1,146 @@
+<div class="mt-20">
+    <!-- search-->
+    <div class="container mx-auto">
+      <div class="flex justify-center  relative">
+        <input type="text" [(ngModel)]="search" placeholder="search" class="border border-black outline-none py-2 px-5 rounded">
+        <i class="fa fa-search absolute flex justify-center top-3 left-24 w-full" aria-hidden="true"></i>
+
+      </div>
+    </div>
+    <!-- list -->
+    <div class="container mx-auto relative">
+        <div class="flex flex-col">
+            <div class="overflow-x-auto sm:mx-0.5 lg:mx-0.5">
+                <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+                    <div class="overflow-hidden">
+             
+                        <table class="min-w-full">
+                            <thead class="bg-white border-b ">
+                                <tr>
+                                    <th scope="col" class="font-bold text-sm  text-gray-900 px-6 py-4 text-left">
+                                        #
+                                    </th>
+                                    <th scope="col" class="font-bold text-sm  text-gray-900 px-6 py-4 text-left">
+                                        Firstname
+                                    </th>
+                                    <th scope="col" class="font-bold text-sm  text-gray-900 px-6 py-4 text-left">
+                                        LastName
+                                    </th>
+                                    <th scope="col" class="font-bold text-sm  text-gray-900 px-6 py-4 text-left">
+                                        Age
+                                    </th>
+                                    <th scope="col" class="font-bold text-sm  text-gray-900 px-6 py-4 text-left">
+                                        Address
+                                    </th>
+                                    <th scope="col" class="font-bold text-sm  text-gray-900 px-6 py-4 text-left">
+                                        Email
+                                    </th>
+                                    <th scope="col" class="font-bold text-sm text-gray-900 px-6 py-4 text-left">
+                                        MobileNo.
+                                    </th>
+                                    <th scope="col" class="font-bold text-sm  text-gray-900 px-6 py-4 text-left">
+                                        Profession
+                                    </th>
+                                    <th scope="col" class="font-bold text-sm  text-gray-900 px-6 py-4 text-left">
+                                        Edit
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody *ngFor="let x of list | filter:search  | paginate: { itemsPerPage: 10, currentPage: currentPage };let i=index">
+                                <tr #trv contenteditable="false" class="bg-gray-100 border-b hoveer:shadow-inner hover:bg-gray-200 " (mouseenter)="showDetailson(x)" (mouseleave)="showDetailsoff()">
+                                    <td  class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{i}}</td>
+                                    <td   class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                        {{x.firstname | capitalize}}
+                                    </td>
+                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                        {{x.lastname | capitalize}}
+                                    </td>
+                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                        {{x.age}}
+                                    </td>
+                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                        {{x.address| capitalize}}
+                                    </td>
+                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                        {{x.email}}
+                                    </td>
+                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                        {{x.mobile}}
+                                    </td>
+                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                        {{x.profession | uppercase}}
+                                    </td>
+                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                        <i title="edit"
+                                            class="fa fa-pencil active ml-5 bg-white rounded-full hover:bg-green-500 p-2 cursor-pointer"
+                                            aria-hidden="true" (click)="edit(x,trv)"></i>
+                                        <i title="delete"
+                                            class="fa fa-trash delete  ml-1 bg-white rounded-full hover:bg-red-500 p-2 cursor-pointer"
+                                            aria-hidden="true" (click)="delete(x,i)"></i>
+                                        <button *ngIf='x.boo' class="ml-4 outline-none " (click)="save(x,trv)">save</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                               <!-- <div *ngIf="nowShow" class= "absolute flex justify-center w-full h-full items-center">
+                                <show [name]="name" [age]="age" ></show>
+                               </div> -->
+
+                        </table>
+                        <div class="mt-4 ">
+                            <div class="">
+                                <button class="bg-blue-500 rounded  text-white px-3 py-1 " (click)="addDetail()">Add Details</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex justify-center items-center h-full">
+                        <div  class="flex gap-x-10 items-center h-full">
+                            <i *ngIf="back" class="fa fa-chevron-left cursor-pointer" aria-hidden="true" (click)="pageSubOn()"></i>
+                            <span class=" font-bold ">{{currentPage}}</span>
+                            <i class="fa fa-chevron-right cursor-pointer" aria-hidden="true" (click)="pageAddOn()"></i>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        <div *ngIf="isShow1" class="absolute flex top-0 opacity-75  bg-gray-600 justify-center w-full h-full items-center font-sans ">
+            <form [formGroup]="formData">
+                <div class=" bg-slate-400 p-10  whitespace-nowrap rounded ">
+                <i class="fa fa-arrow-left cursor-pointer" aria-hidden="true" (click)="isClose()"></i>
+                    <h1 class="text-center font-bold mb-5 text-xl text-black">Add Details</h1>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div><input formControlName="firstname" type="text" placeholder="FirstName" name="" id=""
+                            [class.invalid]="formData.get('firstname')?.invalid && (formData.get('firstname')?.dirty || formData.get('firstname')?.touched || isSubmitted)"    
+                            class="outline-none rounded border border-black px-5 py-1 bg-[#f1f1f1]"></div>
+                                <div><input formControlName="lastname" type="text" placeholder="LastName" name="" id=""
+                            [class.invalid]="formData.get('lastname')?.invalid && (formData.get('lastname')?.dirty || formData.get('lastname')?.touched || isSubmitted)"    
+                                    class="outline-none rounded border border-black px-5 py-1 bg-[#ffff]"></div>
+                        <div><input formControlName="age" type="text" placeholder="Age" name="" id=""
+                            [class.invalid]="formData.get('age')?.invalid && (formData.get('age')?.dirty || formData.get('age')?.touched || isSubmitted)"    
+                            class="outline-none rounded border border-black px-5 py-1 bg-[#ffff]"></div>
+                        <div><input formControlName="address" type="text" placeholder="Address" name="" id=""
+                            [class.invalid]="formData.get('address')?.invalid && (formData.get('address')?.dirty || formData.get('address')?.touched || isSubmitted)"    
+                            class="outline-none rounded border border-black px-5 py-1 bg-[#ffff]"></div>
+                        <div><input formControlName="email" type="text" placeholder="Email" name="" id=""
+                            [class.invalid]="formData.get('email')?.invalid && (formData.get('email')?.dirty || formData.get('email')?.touched || isSubmitted)"    
+                            class="outline-none rounded border border-black px-5 py-1 bg-[#ffff]"></div>
+                        <div><input formControlName="mobile" type="text" placeholder="Mobile" name="" id=""
+                            [class.invalid]="formData.get('mobile')?.invalid && (formData.get('mobile')?.dirty || formData.get('mobile')?.touched || isSubmitted)"    
+                            class="outline-none rounded border border-black px-5 py-1 bg-[#ffff]"></div>
+                        <div><input formControlName="profession" type="text" placeholder="Profession" name="" id=""
+                            [class.invalid]="formData.get('proesion')?.invalid && (formData.get('proesion')?.dirty || formData.get('proesion')?.touched || isSubmitted)"    
+                            class="outline-none rounded border border-black px-5 py-1 bg-[#ffff]"></div>
+                    </div>
+                    <div class="mt-5">
+                        <button
+                        [disabled]="this.formData.get('firstname')?.invalid|| this.formData.get('lastname')?.invalid || this.formData.get('email')?.invalid|| this.formData.get('mobile')?.invalid || this.formData.get('age')?.invalid || (this.formData.get('proesion')?.invalid) ||this.formData.get('address')?.invalid " 
+                         class="border border-black px-5 py-1 rounded bg-green-400" (click)="saveData()">Save</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+   
+</div>
+
+

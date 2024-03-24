@@ -1,0 +1,41 @@
+<div class="bg-gray-800">
+    <div class="flex justify-center min-h-screen items-center sm:px-20 md:px-40 lg:px-80 ">
+        <div class="bg-white rounded w-full ">
+            <div class="w-full h-full py-10">
+                <form autocomplete="off"  [formGroup]="formData">
+                    <div class="flex flex-col gap-y-5 m-20">
+                        <h1 class="mb-5 uppercase text-3xl font-bold  text-center">Reset password</h1>
+                        <div class="relative">
+                            <input formControlName="password"
+                                [class.invalid]="formData.get('password')?.invalid && (formData.get('password')?.dirty || formData.get('password')?.touched || isSubmitted)"
+                                type="password" class="outline-none border border-gray-300  w-full px-4 py-3 rounded" placeholder="Enter New Password"
+                                name="password" id="password">
+                            <i *ngIf="isPasswordOpen" class="fa fa-eye absolute right-5 top-5 cursor-pointer" aria-hidden="true"
+                                (click)="isPasswordManage()"></i>
+                            <i *ngIf="isPasswordClose" class="fa fa-eye-slash absolute right-5 top-5 cursor-pointer" aria-hidden="true"
+                                (click)="isPasswordManage()"></i>
+                            <span
+                                *ngIf="formData.get('password')?.invalid && (formData.get('password')?.dirty || formData.get('password')?.touched || isSubmitted)"
+                                class="text-red-600" for="password">Must six character</span>
+                        </div>
+                        <div class="relative">
+                            <label for="repeatPass"></label>
+                            <input formControlName="Repeatpassword" type="password"
+                                [class.invalid]="formData.get('Repeatpassword')?.invalid && (formData.get('Repeatpassword')?.dirty || formData.get('Repeatpassword')?.touched || isSubmitted)"
+                                class="outline-none border border-gray-300  w-full px-4 py-3 rounded" placeholder="Repaeat your Password"
+                                name="repeatPass" id="repeatPass">
+                            <i class="fa fa-repeat absolute right-5 top-5" aria-hidden="true"></i>
+                            <span *ngIf="isPasswordMisMatch" class="text-red-600" for="useremail">Password did not Match</span>
+                        </div>
+                        </div>
+                </form>
+                <div class="flex justify-center px-20 mt-10 ">
+                    <button type="submit"
+                    (click)="isClickBtn()"
+                    [disabled]="(this.formData.get('Repeatpassword')?.invalid) || (this.formData.get('password')?.invalid)"
+                        class="text-white  border-none bg-gradient-to-r from-violet-500 to-fuchsia-500 w-full rounded py-2 uppercase">Reset Password</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

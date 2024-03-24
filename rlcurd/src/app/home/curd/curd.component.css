@@ -1,0 +1,9 @@
+.active:active {
+  background: red;
+}
+.delete:active {
+  background: green;
+}
+.invalid {
+  border-color: red;
+}
